@@ -47,6 +47,7 @@ function deletetodos(id){
   </form>
   <h1 className="header">Todo-List</h1>
   <ul className="list">
+    {todos.length===0&&"no todos"}
     {todos.map(todos=>{
       return <li key={todos.id}>
       <label>
