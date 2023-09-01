@@ -10,13 +10,26 @@ export default function App(){
     settodos((currenttodo)=>{
         return  [...todos,{id:crypto.randomUUID(),title:newitem,completed:false}]
     })
+    setnewitem("")
  }
-// function handlesubmit(e)
-// {
-//   e.preventDefault() 
-//   settodos([...todos,{id:crypto.randomUUID(),title:newitem,completed:false}])
-// }
 console.log(todos)
+function toggletodo(id,completed){
+settodos(currenttodo=>{
+  return currenttodo.map(todos=>{
+    if(todos.id===id)
+    {
+      return {...todos,completed}
+    }
+    return todos
+  })
+})
+
+}
+function deletetodos(id){
+  settodos(currenttodo=>{
+    return currenttodo.filter(todo=>todo.id!==id)
+  })
+}
  //setnewitem("")
   return( 
     <>
@@ -34,20 +47,17 @@ console.log(todos)
   </form>
   <h1 className="header">Todo-List</h1>
   <ul className="list">
-    <li>
+    {todos.map(todos=>{
+      return <li key={todos.id}>
       <label>
-        <input type="checkbox"/>item 1
+        <input type="checkbox" checked={todos.completed} onChange={e=>toggletodo(todos.id,e.target.checked)}/>{todos.title}
         
       </label>
-      <button className="btn btn-danger">Delete</button>
+      <button onClick={()=>deletetodos(todos.id)} className="btn btn-danger">Delete</button>
     </li>
-    <li>
-      <label>
-        <input type="checkbox"/>item 2
-        
-      </label>
-      <button className="btn btn-danger">Delete</button>
-    </li>
+    })}
+    
+    
   </ul>
   </>
   )
